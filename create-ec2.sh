@@ -30,9 +30,9 @@ do
     aws route53 change-resource-record-sets \
   --hosted-zone-id $hosted_zone_id \
   --change-batch '{"Changes":[{"Action":"UPSERT",
-  "ResourceRecordSet":{"Name":"$name.$domain_name",
+  "ResourceRecordSet":{"Name":"'$name.$domain_name'",
                        "Type":"A",
                        "TTL":1,
                        "ResourceRecords":
-                       [{"Value":"$ip_to_use"}]}}]}'
+                       [{"Value":"'$ip_to_use'"}]}}]}'
 done
