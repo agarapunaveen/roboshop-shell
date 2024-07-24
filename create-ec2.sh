@@ -24,5 +24,5 @@ do
         ip_to_use=$private_ip
 
     fi
-    echo "instance name:$name ip_address:$ip_to_use
+    echo "instance name:$name ip_address:$ip_to_use"
 done
