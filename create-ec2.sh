@@ -12,9 +12,7 @@ do
   echo "creating instance for:$name with instance type: $instance_type"
 
   instance_id=$(aws ec2 run-instances --image-id ami-041e2ea9402c46c32  --instance-type $instance_type  --security-group-ids sg-09ea0a2725aa44306 --subnet-id subnet-01bb45782f2726bdf --query 'instances[0].InstanceId' --output text)
-  aws ec2 create-tags \
-    --resources $instance_id \
-    --tags Key=name,Value=$name
+  aws ec2 create-tags --resources $instance_id --tags Key=name,Value=$name
     echo "instance created for:$name"
    if [ $name == "web" ]
       then
@@ -28,9 +26,7 @@ do
     fi
     echo "instance name:$name ip_address:$ip_to_use"
 
-    aws route53 change-resource-record-sets \
-  --hosted-zone-id $hosted_zone_id \
-  --change-batch '{"Changes":[{"Action":"UPSERT",
+    aws route53 change-resource-record-sets --hosted-zone-id $hosted_zone_id --change-batch '{"Changes":[{"Action":"UPSERT",
   "ResourceRecordSet":{"Name":"'$name.$domain_name'",
                        "Type":"A",
                        "TTL":1,
