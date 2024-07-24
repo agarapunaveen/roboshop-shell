@@ -12,7 +12,7 @@ do
   echo "creating instance for:$name with instance type: $instance_type"
 
   instance_id=$(aws ec2 run-instances --image-id ami-041e2ea9402c46c32  --instance-type $instance_type  --security-group-ids sg-09ea0a2725aa44306 --subnet-id subnet-01bb45782f2726bdf --query 'instances[0].InstanceId' --output text)
-  aws ec2 create-tags --resources $instance_id --tags Key=name,Value=$name
+  aws ec2 create-tags --resources $instance_id --tags Key=Name,Value=$name
     echo "instance created for:$name"
    if [ $name == "web" ]
       then
