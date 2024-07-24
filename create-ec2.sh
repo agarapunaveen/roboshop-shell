@@ -1,5 +1,6 @@
 instances=("web" "mongodb" "catalogue" "redis" "user" "cart" "mysql" "shipping" "rabbitmq" "payment" "dispatch")
-
+domain_name=naveencloud.online
+hosted_zone_id=Z0976808CYP3KUCUVNE3
 for name in ${instances[@]};
 do
   if [ $name == "shipping" ] || [ $name == "mysql" ]
@@ -25,4 +26,13 @@ do
 
     fi
     echo "instance name:$name ip_address:$ip_to_use"
+
+    aws route53 change-resource-record-sets \
+  --hosted-zone-id $hosted_zone_id \
+  --change-batch '{"Changes":[{"Action":"UPSERT",
+  "ResourceRecordSet":{"Name":"$name.$domain_name",
+                       "Type":"A",
+                       "TTL":1,
+                       "ResourceRecords":
+                       [{"Value":"$ip_to_use"}]}}]}'
 done
